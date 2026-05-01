@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
   selector: 'app-login',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css',
 })
 export class Login {
   private formBuilder = inject(FormBuilder);

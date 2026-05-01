@@ -21,7 +21,10 @@ export class Customers implements OnInit {
 
   searchControl = new FormControl('');
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadCustomers();
+    this.setupSearch();
+  }
 
   loadCustomers() {
     this.loading = true;
