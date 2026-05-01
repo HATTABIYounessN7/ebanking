@@ -1,1 +1,5 @@
-export interface CustomerModel {}
+export interface Customer {
+  id?: number;
+  name: string;
+  email: string;
+}
