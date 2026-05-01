@@ -20,7 +20,7 @@ public class JwtUtils {
     @Value("${app.jwt.secret}")
     private String secret;
 
-    @Value("{app.jwt.expiration}")
+    @Value("${app.jwt.expiration}")
     private long expiration;
 
     public String generateToken(UserDetails userDetails) {
@@ -38,6 +38,7 @@ public class JwtUtils {
                 .subject(subject)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getSigningKey())
                 .compact();
     }
 
