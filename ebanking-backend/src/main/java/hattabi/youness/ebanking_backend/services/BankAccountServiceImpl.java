@@ -1,6 +1,6 @@
 package hattabi.youness.ebanking_backend.services;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -98,7 +98,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
                 CurrentAccount currentAccount = new CurrentAccount();
                 currentAccount.setId(UUID.randomUUID().toString());
-                currentAccount.setCreatedAt(new Date());
+                currentAccount.setCreatedAt(LocalDateTime.now());
                 currentAccount.setBalance(initialBalance);
                 currentAccount.setOverDraft(overDraft);
                 currentAccount.setStatus(AccountStatus.CREATED);
@@ -118,7 +118,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
                 SavingAccount savingAccount = new SavingAccount();
                 savingAccount.setId(UUID.randomUUID().toString());
-                savingAccount.setCreatedAt(new Date());
+                savingAccount.setCreatedAt(LocalDateTime.now());
                 savingAccount.setBalance(initialBalance);
                 savingAccount.setInterestRate(interestRate);
                 savingAccount.setStatus(AccountStatus.CREATED);
@@ -169,7 +169,7 @@ public class BankAccountServiceImpl implements BankAccountService {
                 operation.setType(OperationType.DEBIT);
                 operation.setAmount(amount);
                 operation.setDescription(description);
-                operation.setOperationDate(new Date());
+                operation.setOperationDate(LocalDateTime.now());
                 operation.setBankAccount(bankAccount);
                 accountOperationRepository.save(operation);
 
@@ -188,7 +188,7 @@ public class BankAccountServiceImpl implements BankAccountService {
                 operation.setType(OperationType.CREDIT);
                 operation.setAmount(amount);
                 operation.setDescription(description);
-                operation.setOperationDate(new Date());
+                operation.setOperationDate(LocalDateTime.now());
                 operation.setBankAccount(bankAccount);
                 accountOperationRepository.save(operation);
 

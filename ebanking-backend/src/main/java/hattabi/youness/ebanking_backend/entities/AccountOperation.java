@@ -1,6 +1,6 @@
 package hattabi.youness.ebanking_backend.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import hattabi.youness.ebanking_backend.enums.OperationType;
 import jakarta.persistence.*;
@@ -16,12 +16,13 @@ public class AccountOperation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Date operationDate;
+    private LocalDateTime operationDate;
     private double amount;
     private String description;
 
     @Enumerated(EnumType.STRING)
     private OperationType type;
 
+    @ManyToOne
     private BankAccount bankAccount;
 }

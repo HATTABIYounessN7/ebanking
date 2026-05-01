@@ -1,6 +1,6 @@
 package hattabi.youness.ebanking_backend.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import hattabi.youness.ebanking_backend.enums.AccountStatus;
@@ -19,7 +19,7 @@ public abstract class BankAccount {
     private String id;
 
     private double balance;
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
