@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CustomerService } from '../../services/customer.service';
@@ -14,8 +14,8 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 export class Customers implements OnInit {
   private customerService = inject(CustomerService);
 
-  customers: Customer[] = [];
-  loading = false;
+  customers = signal<Customer[]>([]);
+  loading = signal(false);
   errorMessage = '';
   deleteSuccess = '';
 
@@ -27,15 +27,15 @@ export class Customers implements OnInit {
   }
 
   loadCustomers() {
-    this.loading = true;
+    this.loading.set(true);
     this.customerService.getCustomers().subscribe({
       next: (data) => {
-        this.customers = data;
-        this.loading = false;
+        this.customers.set(data);
+        this.loading.set(false);
       },
       error: (_) => {
         this.errorMessage = 'Failed to load customers';
-        this.loading = false;
+        this.loading.set(false);
       },
     });
   }
@@ -48,7 +48,7 @@ export class Customers implements OnInit {
         switchMap((keyword) => this.customerService.searchCustomers(keyword ?? '')),
       )
       .subscribe({
-        next: (data) => (this.customers = data),
+        next: (data) => this.customers.set(data),
         error: () => (this.errorMessage = 'Search failed'),
       });
   }
@@ -59,7 +59,7 @@ export class Customers implements OnInit {
     this.customerService.deleteCustomer(id).subscribe({
       next: () => {
         this.deleteSuccess = 'Customer deleted successfully';
-        this.customers = this.customers.filter((c) => c.id !== id);
+        this.customers.update((c) => c.filter((customer) => customer.id !== id));
         setTimeout(() => (this.deleteSuccess = ''), 3000);
       },
       error: () => (this.errorMessage = 'Failed to delete customer'),
