@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<spring-ai.version>1.0.0-M6</spring-ai.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -41,7 +42,7 @@
 			<dependency>
 				<groupId>org.springframework.ai</groupId>
 				<artifactId>spring-ai-bom</artifactId>
-				<version>1.0.0</version>
+				<version>${spring-ai.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -52,7 +53,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -69,24 +69,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>io.projectreactor</groupId>
-			<artifactId>reactor-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		
+		<!-- Spring AI — OpenAI (includes SimpleVectorStore internally) -->
 		<dependency>
 			<groupId>org.springframework.ai</groupId>
 			<artifactId>spring-ai-openai-spring-boot-starter</artifactId>
-			<version>1.0.0-M6</version>
-		</dependency>
-		<!-- Source: https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-vector-store -->
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-vector-store</artifactId>
-			<version>2.0.0-M5</version>
-			<scope>compile</scope>
 		</dependency>
 		
+		<!-- PDF reader for ingesting documents -->
+		<dependency>
+			<groupId>org.springframework.ai</groupId>
+			<artifactId>spring-ai-pdf-document-reader</artifactId>
+		</dependency>
+		
+		<!-- Telegram -->
 		<dependency>
 			<groupId>org.telegram</groupId>
 			<artifactId>telegrambots-springboot-longpolling-starter</artifactId>
@@ -97,15 +93,11 @@
 			<artifactId>telegrambots-client</artifactId>
 			<version>8.2.0</version>
 		</dependency>
-
+		
+		<!-- WebFlux for calling your banking API -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.ai</groupId>
-			<artifactId>spring-ai-pdf-document-reader</artifactId>
 		</dependency>
 	</dependencies>
 	
