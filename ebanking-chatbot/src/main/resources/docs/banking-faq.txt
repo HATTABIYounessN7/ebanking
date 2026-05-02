@@ -1,0 +1,44 @@
+DIGITAL BANKING FAQ
+
+Q: What types of accounts are available?
+A: We offer two types of accounts: Current Accounts and Saving Accounts.
+Current Accounts come with an overdraft facility.
+Saving Accounts earn interest at a competitive rate.
+
+Q: What is an overdraft?
+A: An overdraft allows you to withdraw more money than you currently 
+have in your Current Account, up to a pre-approved limit of 9000 MAD.
+
+Q: What is the interest rate on saving accounts?
+A: Our saving accounts currently offer an interest rate of 5.5% per year.
+
+Q: What operations can I perform on my account?
+A: You can perform three types of operations:
+- Credit: deposit money into your account
+- Debit: withdraw money from your account
+- Transfer: move money between two accounts
+
+Q: What happens if I have insufficient balance for a debit?
+A: If your account balance is insufficient to cover the requested 
+debit amount, the operation will be rejected with an error message.
+
+Q: What are the account statuses?
+A: An account can have one of three statuses:
+- CREATED: account has just been opened
+- ACTIVATED: account is active and operational
+- SUSPENDED: account has been temporarily suspended
+
+Q: How can I check my account history?
+A: You can view your paginated transaction history by providing 
+your account ID to the chatbot or through the web application.
+
+Q: How do I contact support?
+A: You can reach our support team at support@digitalbank.ma
+or visit any of our branches during business hours 9am-5pm.
+
+Q: Is my data secure?
+A: Yes. All communications are secured with JWT authentication 
+and all sensitive data is encrypted at rest and in transit.
+
+Q: What currencies are supported?
+A: Currently we support MAD (Moroccan Dirham) for all operations.
