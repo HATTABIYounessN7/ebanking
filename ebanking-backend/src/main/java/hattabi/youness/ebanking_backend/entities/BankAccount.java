@@ -3,6 +3,9 @@ package hattabi.youness.ebanking_backend.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import hattabi.youness.ebanking_backend.enums.AccountStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,6 +28,7 @@ public abstract class BankAccount {
     private AccountStatus status;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Customer customer;
 
     @OneToMany(mappedBy = "bankAccount", fetch = FetchType.LAZY)

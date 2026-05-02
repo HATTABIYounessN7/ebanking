@@ -2,6 +2,9 @@ package hattabi.youness.ebanking_backend.entities;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import hattabi.youness.ebanking_backend.enums.OperationType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,5 +27,6 @@ public class AccountOperation {
     private OperationType type;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private BankAccount bankAccount;
 }
