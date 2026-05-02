@@ -12,7 +12,7 @@ export interface AccountHistory {
   currentPage: number;
   totalPages: number;
   pageSize: number;
-  accountOperationDTOS: AccountOperation[];
+  accountOperationDTOs: AccountOperation[];
 }
 
 export interface BankAccount {

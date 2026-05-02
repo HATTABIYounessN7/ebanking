@@ -1,0 +1,267 @@
+<h2 class="mb-4"><i class="bi bi-credit-card me-2"></i>Accounts</h2>
+
+@if (errorMessage()) {
+  <div class="alert alert-danger alert-dismissible">
+    <i class="bi bi-exclamation-circle me-2"></i>{{ errorMessage() }}
+    <button type="button" class="btn-close" (click)="errorMessage.set('')"></button>
+  </div>
+}
+
+@if (successMessage()) {
+  <div class="alert alert-success">
+    <i class="bi bi-check-circle me-2"></i>{{ successMessage() }}
+  </div>
+}
+
+<div class="row g-4">
+  <div class="col-md-5">
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-dark text-white"><i class="bi bi-search me-2"></i>Search...</div>
+      <div class="card-body">
+        <form [formGroup]="searchForm" (ngSubmit)="searchAccount()">
+          <div class="input-group">
+            <input
+              type="text"
+              formControlName="accountId"
+              placeholder="Enter account ID..."
+              class="form-control"
+            />
+            <button type="submit" class="btn btn-dark" [disabled]="searchForm.invalid">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    @if (selectedAccount()) {
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+          <i class="bi bi-info-circle me-2"></i>Account Details
+        </div>
+        <div class="card-body">
+          <div class="mb-2">
+            <span
+              class="badge"
+              [class]="selectedAccount()!.type === 'CurrentAccount' ? 'bg-primary' : 'bg-success'"
+            >
+              {{ selectedAccount()!.type }}
+            </span>
+          </div>
+          <table class="table table-sm table-borderless mb-0">
+            <tr>
+              <td class="text-muted">ID</td>
+              <td class="text-truncate" style="max-width: 150px">
+                {{ selectedAccount()!.id }}
+              </td>
+            </tr>
+            <tr>
+              <td class="text-muted">Owner</td>
+              <td>{{ selectedAccount()!.customerDTO.name }}</td>
+            </tr>
+            <tr>
+              <td class="text-muted">Balance</td>
+              <td class="fw-bold text-success">
+                {{ selectedAccount()!.balance | number: '1.2-2' }} MAD
+              </td>
+            </tr>
+            <tr>
+              <td class="text-muted">Status</td>
+              <td>
+                <span
+                  class="badge"
+                  [class]="
+                    selectedAccount()!.status === 'ACTIVATED'
+                      ? 'bg-success'
+                      : selectedAccount()!.status === 'SUSPENDED'
+                        ? 'bg-danger'
+                        : 'bg-warning text-dark'
+                  "
+                >
+                  {{ selectedAccount()!.status }}
+                </span>
+              </td>
+            </tr>
+
+            @if (selectedAccount()!.overDraft) {
+              <tr>
+                <td class="text-muted">Overdraft</td>
+                <td>{{ selectedAccount()!.overDraft | number: '1.2-2' }}</td>
+              </tr>
+            }
+
+            @if (selectedAccount()!.interestRate) {
+              <tr>
+                <td class="text-muted">Interest Rate</td>
+                <td>{{ selectedAccount()!.interestRate }}%</td>
+              </tr>
+            }
+          </table>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <i class="bi bi-arrow-left-right me-2"></i>New Operation
+        </div>
+        <div class="card-body">
+          <form [formGroup]="operationForm" (ngSubmit)="executeOperation()">
+            <div class="mb-3">
+              <label class="form-label">Operation Type</label>
+              <select class="form-select" formControlName="operationType">
+                <option value="DEBIT">Debit (Withdrawal)</option>
+                <option value="CREDIT">Credit (Deposit)</option>
+                <option value="TRANSFER">Transfer</option>
+              </select>
+            </div>
+
+            @if (operationType() === 'TRANSFER') {
+              <div class="mb-3">
+                <label class="form-label">Destination Account ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="accountDestination"
+                  placeholder="Destination account ID"
+                />
+              </div>
+            }
+
+            <div class="mb-3">
+              <label class="from-label">Amount (MAD)</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="amount"
+                placeholder="0.00"
+                min="1"
+              />
+            </div>
+
+            @if (operationType() !== 'TRANSFER') {
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="description"
+                  placeholder="Operation description"
+                />
+              </div>
+            }
+            <button
+              type="submit"
+              class="btn btn-dark w-100"
+              [disabled]="operationForm.invalid || loading()"
+            >
+              @if (loading()) {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+              }
+              Execute Operation
+            </button>
+          </form>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="col-md-7">
+    <div class="card shadow-sm">
+      <div class="card-header bg-dark text-white d-flex justify-content-between">
+        <span> <i class="bi bi-clock-history me-2"></i>Operations History </span>
+        @if (accountHistory()) {
+          <span class="badge bg-secondary">
+            Page {{ currentPage() + 1 }} / {{ accountHistory()!.totalPages }}
+          </span>
+        }
+      </div>
+
+      <div class="card-body p-0">
+        @if (historyLoading()) {
+          <div class="text-center py-5">
+            <div class="spinner-border text-dark"></div>
+          </div>
+        } @else if (accountHistory()) {
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (op of accountHistory()!.accountOperationDTOs; track op.id) {
+                  <tr>
+                    <td class="text-muted small">
+                      {{ op.operationDate | date: 'dd/MM/yyyy HH:mm' }}
+                    </td>
+                    <td>
+                      <span
+                        class="badge"
+                        [class]="op.type === 'CREDIT' ? 'bg-success' : 'bg-danger'"
+                      >
+                        <i class="bi bi-arrow-{{ op.type === 'CREDIT' ? 'down' : 'up' }} me-1"></i>
+                        {{ op.type }}
+                      </span>
+                    </td>
+                    <td
+                      class="fw-bold"
+                      [class]="op.type === 'CREDIT' ? 'text-success' : 'text-danger'"
+                    >
+                      {{ op.type === 'CREDIT' ? '+' : '-' }}
+                      {{ op.amount | number: '1.2-2' }}
+                    </td>
+                    <td class="text-muted small">{{ op.description }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td class="text-center text-muted py-4" colspan="4">
+                      <i class="bi bi-inbox me-2"></i>No Operations found
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          @if (accountHistory()!.totalPages > 0) {
+            <div class="d-flex justify-content-center p-3">
+              <nav>
+                <ul class="pagination pagination-sm mb-0">
+                  <li class="page-item" [class.disabled]="currentPage() === 0">
+                    <button class="page-link" (click)="goToPage(currentPage() - 1)">
+                      <i class="bi bi-chevron-left"></i>
+                    </button>
+                  </li>
+                  @for (page of pages(); track page) {
+                    <li class="page-item" [class.active]="page === currentPage()">
+                      <button class="page-link" (click)="goToPage(page)">
+                        {{ page + 1 }}
+                      </button>
+                    </li>
+                  }
+                  <li
+                    class="page-item"
+                    [class.disabled]="currentPage() === accountHistory()!.totalPages - 1"
+                  >
+                    <button class="page-link" (click)="goToPage(currentPage() + 1)">
+                      <i class="bi bi-chevron-right"></i>
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          }
+        } @else {
+          <div class="text-center text-muted py-5">
+            <i class="bi bi-search" style="font-size: 2rem"></i>
+            <p class="mt-2">Search for an account to see its history</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

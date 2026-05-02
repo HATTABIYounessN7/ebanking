@@ -201,7 +201,7 @@ public class BankAccountServiceImpl implements BankAccountService {
         public void transfer(String accountIdSource, String accountIdDestination, double amount)
                         throws BankAccountNotFoundException, BalanceNotSufficientException {
                 debit(accountIdSource, amount, "Transfer to " + accountIdDestination);
-                credit(accountIdDestination, amount, "Transfer to " + accountIdSource);
+                credit(accountIdDestination, amount, "Transfer from " + accountIdSource);
                 log.info("Transfer of {} from {} to {}", amount, accountIdSource, accountIdDestination);
         }
 
