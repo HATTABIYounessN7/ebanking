@@ -1,44 +1,82 @@
-DIGITAL BANKING FAQ
+DIGITAL BANKING - KNOWLEDGE BASE
 
-Q: What types of accounts are available?
-A: We offer two types of accounts: Current Accounts and Saving Accounts.
-Current Accounts come with an overdraft facility.
-Saving Accounts earn interest at a competitive rate.
+=== ACCOUNT TYPES ===
 
-Q: What is an overdraft?
-A: An overdraft allows you to withdraw more money than you currently 
-have in your Current Account, up to a pre-approved limit of 9000 MAD.
+Current Account (CA):
+- Designed for everyday transactions
+- Comes with an overdraft facility of up to 9000 MAD
+- Ideal for salary deposits and regular payments
+- No minimum balance required
 
-Q: What is the interest rate on saving accounts?
-A: Our saving accounts currently offer an interest rate of 5.5% per year.
+Saving Account (SA):
+- Designed for long-term savings
+- Earns interest at 5.5% per year
+- Best for growing your savings over time
+- Minimum opening balance recommended: 1000 MAD
 
-Q: What operations can I perform on my account?
-A: You can perform three types of operations:
-- Credit: deposit money into your account
-- Debit: withdraw money from your account
-- Transfer: move money between two accounts
+=== ACCOUNT STATUSES ===
 
-Q: What happens if I have insufficient balance for a debit?
-A: If your account balance is insufficient to cover the requested 
-debit amount, the operation will be rejected with an error message.
+CREATED: Account has just been opened and is being processed.
+ACTIVATED: Account is fully active and operational.
+SUSPENDED: Account has been temporarily suspended due to 
+           suspicious activity or customer request.
 
-Q: What are the account statuses?
-A: An account can have one of three statuses:
-- CREATED: account has just been opened
-- ACTIVATED: account is active and operational
-- SUSPENDED: account has been temporarily suspended
+=== OPERATIONS ===
 
-Q: How can I check my account history?
-A: You can view your paginated transaction history by providing 
-your account ID to the chatbot or through the web application.
+Credit (Deposit):
+- Add money to an account
+- No upper limit on deposits
+- Reflected immediately in account balance
 
-Q: How do I contact support?
-A: You can reach our support team at support@digitalbank.ma
-or visit any of our branches during business hours 9am-5pm.
+Debit (Withdrawal):
+- Remove money from an account
+- Cannot exceed current balance
+- Operation is rejected if balance is insufficient
 
-Q: Is my data secure?
-A: Yes. All communications are secured with JWT authentication 
-and all sensitive data is encrypted at rest and in transit.
+Transfer:
+- Move money between two accounts
+- Requires valid source and destination account IDs
+- Source account must have sufficient balance
+- Both accounts must be active
 
-Q: What currencies are supported?
-A: Currently we support MAD (Moroccan Dirham) for all operations.
+=== SECURITY ===
+
+- All sessions are secured with JWT (JSON Web Token)
+- Tokens expire after 24 hours
+- All API calls are authenticated
+- Sensitive data is encrypted at rest and in transit
+
+=== SUPPORT ===
+
+- Email: support@digitalbank.ma
+- Phone: +212 5XX-XXXXXX
+- Hours: Monday to Friday, 9am - 5pm
+- Emergency: Available 24/7 for card blocking
+
+=== FEES ===
+
+- Account opening: Free
+- Monthly maintenance: Free
+- Transfers between own accounts: Free
+- International transfers: 1.5% of amount (min 50 MAD)
+- Overdraft usage fee: 2% per month on used overdraft amount
+
+=== COMMON ISSUES ===
+
+Insufficient balance error:
+This means your account does not have enough funds for the 
+requested debit or transfer. Either deposit funds first 
+or reduce the amount.
+
+Account suspended:
+Contact support immediately at support@digitalbank.ma 
+or call our helpline to reactivate your account.
+
+Forgotten account ID:
+Your account ID is visible in the web application under 
+the Accounts section. You can also ask the chatbot to 
+list your accounts if you are authenticated.
+
+Transaction not showing:
+Transactions are reflected immediately. If a transaction 
+is missing, please contact support with the date and amount.
