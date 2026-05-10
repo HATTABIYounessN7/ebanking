@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import hattabi.youness.ebanking_chatbot.banking.BankingApiClient;
+import hattabi.youness.ebanking_chatbot.banking.BankingApiModels;
 import hattabi.youness.ebanking_chatbot.rag.RagService;
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class TestController {
         private final SimpleVectorStore vectorstore;
         private final RagService ragService;
+        private final BankingApiClient bankingApiClient;
 
         @GetMapping("/test/search")
         public List<Map<String, Object>> testSearch(@RequestParam String query) {
@@ -41,5 +44,15 @@ public class TestController {
                 return Map.of(
                                 "question", question,
                                 "answer", answer);
+        }
+
+        @GetMapping("/test/customers")
+        public List<BankingApiModels.Customer> testCustomers() {
+                return bankingApiClient.getAllCustomers();
+        }
+
+        @GetMapping("/test/accounts")
+        public List<BankingApiModels.BankAccount> testAccounts() {
+                return bankingApiClient.getAllAccounts();
         }
 }

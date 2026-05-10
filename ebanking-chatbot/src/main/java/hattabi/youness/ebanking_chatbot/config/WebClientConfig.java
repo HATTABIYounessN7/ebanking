@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class WebClientConfig {
-    @Value("${banking.api.base-url")
+    @Value("${banking.api.base-url}")
     private String bankingApiBaseUrl;
 
     @Bean
